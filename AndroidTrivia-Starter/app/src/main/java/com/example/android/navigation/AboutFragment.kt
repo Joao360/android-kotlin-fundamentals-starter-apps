@@ -33,7 +33,7 @@ class AboutFragment : Fragment() {
         val binding = DataBindingUtil.inflate<FragmentAboutBinding>(inflater, R.layout.fragment_about, container, false)
 
         binding.aboutPlayButton.setOnClickListener { view ->
-            view.findNavController().navigate(R.id.action_aboutFragment_to_gameFragment)
+            view.findNavController().navigate(AboutFragmentDirections.actionAboutFragmentToGameFragment())
         }
 
         return binding.root
