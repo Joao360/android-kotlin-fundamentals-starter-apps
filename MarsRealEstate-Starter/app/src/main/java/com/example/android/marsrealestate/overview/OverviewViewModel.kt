@@ -40,6 +40,11 @@ class OverviewViewModel : ViewModel() {
     val response: LiveData<String>
         get() = _response
 
+    private val _property = MutableLiveData<MarsProperty>()
+
+    val property: LiveData<MarsProperty>
+        get() = _property
+
     /**
      * Call getMarsRealEstateProperties() on init so we can display status immediately.
      */
@@ -55,20 +60,13 @@ class OverviewViewModel : ViewModel() {
             try {
                 val listResult = MarsApi.retrofitService.getProperties()
                 _response.value = "Success: ${listResult.size} Mars properties retrieved"
+
+                if (listResult.isNotEmpty()) {
+                    _property.value = listResult[0]
+                }
             } catch (e: Exception) {
                 _response.value = "Failure: ${e.message}"
             }
         }
-
-        /*MarsApi.retrofitService.getProperties().enqueue(
-                object: Callback<List<MarsProperty>> {
-                    override fun onResponse(call: Call<List<MarsProperty>>, response: Response<List<MarsProperty>>) {
-                        _response.value = "Success: ${response.body()?.size} Mars properties retrieved"
-                    }
-
-                    override fun onFailure(call: Call<List<MarsProperty>>, t: Throwable) {
-                        _response.value = "Failure: " + t.message
-                    }
-                })*/
     }
 }
